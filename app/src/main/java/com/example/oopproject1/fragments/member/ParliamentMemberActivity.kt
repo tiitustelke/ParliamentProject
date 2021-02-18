@@ -1,12 +1,13 @@
-package com.example.oopproject1
+package com.example.oopproject1.fragments.member
 
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
+import com.example.oopproject1.ParliamentMembersData
+import com.example.oopproject1.R
 import com.example.oopproject1.databinding.FragmentParliamentMemberBinding
 import kotlin.random.Random
 
@@ -29,7 +30,8 @@ class ParliamentMemberActivity : Fragment() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        GetNewParliamentMember()
+
+        getNewParliamentMember()
     }
 
     override fun onCreateView(
@@ -37,13 +39,14 @@ class ParliamentMemberActivity : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         val binding = DataBindingUtil.inflate<FragmentParliamentMemberBinding>(
-            inflater, R.layout.fragment_parliament_member,container,false)
+            inflater,
+            R.layout.fragment_parliament_member,container,false)
         binding.name = name
         binding.party = party
         binding.likes = likes.toString()
 
         binding.buttonNext.setOnClickListener {
-            GetNewParliamentMember()
+            getNewParliamentMember()
             binding.name = name
             binding.party = party
             binding.likes = likes.toString()
@@ -51,13 +54,14 @@ class ParliamentMemberActivity : Fragment() {
         // Inflate the layout for this fragment
         return binding.root
     }
-    fun GetNewParliamentMember() {
+    fun getNewParliamentMember() {
         val rand = Random.nextInt(0,199)
         var member = ParliamentMembersData.members[counter]
         if (counter < 199) counter++
         name = (if(member.minister == true) "Ministeri " else "Kansanedustaja ") + member.firstname + " " + ParliamentMembersData.members[counter].lastname
         party = ParliamentMembersData.members[counter].party
         likes = Random.nextInt(-500,500)
+
 
 
     }

@@ -1,9 +1,10 @@
-package com.example.oopproject1
+/*package com.example.oopproject1
 
 import android.content.ContentValues
 import android.content.Context
 import android.database.sqlite.SQLiteDatabase
 import android.database.sqlite.SQLiteOpenHelper
+import android.widget.Toast
 
 val DATABASE_NAME = "ParliamentDB"
 val TABLE_NAME = "ParliamentMember"
@@ -17,14 +18,14 @@ val COL_PICTUREURL = "pictureUrl"
 
 class DataBaseHelper(context: Context) : SQLiteOpenHelper(context, DATABASE_NAME, null,1) {
     override fun onCreate(db: SQLiteDatabase?) {
-        val createTable = "CREATE TABLE " + TABLE_NAME + " (" +
-                COL_HETEKAID + "INTEGER," +
-                COL_SEATNUMBER + "INTEGER," +
-                COL_LASTNAME + "VARCHAR(256)," +
-                COL_FIRSTNAME + "VARCHAR(256)," +
-                COL_PARTY + "VARCHAR(256)," +
-                COL_MINISTER + "BOOLEAN CHECK ($COL_MINISTER IN (0,1)," +
-                COL_PICTUREURL + "VARCHAR(256);"
+        val createTable = ("CREATE TABLE " + TABLE_NAME + " (" +
+                COL_HETEKAID + " INTEGER PRIMARY KEY," +
+                COL_SEATNUMBER + " INTEGER," +
+                COL_LASTNAME + " VARCHAR(256)," +
+                COL_FIRSTNAME + " VARCHAR(256)," +
+                COL_PARTY + " VARCHAR(256)," +
+                COL_MINISTER + " BOOLEAN CHECK ($COL_MINISTER IN (0,1))," +
+                COL_PICTUREURL + " VARCHAR(256));")
         db?.execSQL(createTable)
     }
 
@@ -32,9 +33,9 @@ class DataBaseHelper(context: Context) : SQLiteOpenHelper(context, DATABASE_NAME
         TODO("Not yet implemented")
     }
 
-    fun addParliamentMember(member : ParliamentMember) {
+    fun addParliamentMember(member : ParliamentMember): Long {
         val db = this.writableDatabase
-        var cv = ContentValues()
+        val cv = ContentValues()
         cv.put(COL_HETEKAID,member.hetekaId)
         cv.put(COL_SEATNUMBER,member.seatNumber)
         cv.put(COL_LASTNAME,member.lastname)
@@ -42,10 +43,13 @@ class DataBaseHelper(context: Context) : SQLiteOpenHelper(context, DATABASE_NAME
         cv.put(COL_PARTY,member.party)
         cv.put(COL_MINISTER,member.minister)
         cv.put(COL_PICTUREURL,member.pictureUrl)
+        val result = db.insert(TABLE_NAME,null,cv)
+
         db.close()
+        return result
     }
 
-    fun getParliamentMember(): MutableList<ParliamentMember> {
+    fun getParliamentMembers(): MutableList<ParliamentMember> {
         var list : MutableList<ParliamentMember> = ArrayList()
 
         val db = this.readableDatabase
@@ -53,8 +57,8 @@ class DataBaseHelper(context: Context) : SQLiteOpenHelper(context, DATABASE_NAME
         val result = db.rawQuery(query,null)
         if(result.moveToFirst()) {
             do {
-                val minister = result.getInt(result.getColumnIndex(COL_MINISTER)) == 0
-                var member = ParliamentMember(
+                val minister = false
+                val member = ParliamentMember(
                     result.getInt(result.getColumnIndex(COL_HETEKAID)),
                     result.getInt(result.getColumnIndex(COL_SEATNUMBER)),
                     result.getString(result.getColumnIndex(COL_LASTNAME)),
@@ -64,11 +68,12 @@ class DataBaseHelper(context: Context) : SQLiteOpenHelper(context, DATABASE_NAME
                     result.getString(result.getColumnIndex(COL_PICTUREURL))
 
                 )
-            } while (result.moveToFirst())
+                list.add(member)
+            } while (result.moveToNext())
         }
         result.close()
         db.close()
         return list
     }
 
-}
+}*/

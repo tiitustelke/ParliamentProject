@@ -1,14 +1,7 @@
 package com.example.oopproject1
 
-data class ParliamentMember(
-    val hetekaId: Int,
-    val seatNumber: Int = 0,
-    val lastname: String,
-    val firstname: String,
-    val party: String,
-    val minister: Boolean = false,
-    val pictureUrl: String = ""
-)
+import com.example.oopproject1.data.ParliamentMember
+
 
 class Parliament(val members: List<ParliamentMember>) {
     // return all parties represented in parliament sorted by their name
