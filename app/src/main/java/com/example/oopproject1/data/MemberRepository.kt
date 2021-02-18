@@ -9,7 +9,5 @@ class MemberRepository(private val memberDao: MemberDao) {
     suspend fun addMember(member: ParliamentMember) {
         memberDao.addParliamentMember(member)
     }
-    //suspend fun addMembers(members: ParliamentMembers) {
-        //memberDao.addParliamentMembers(members)
-    //}
+    fun getMembers() = memberDao.getParliamentMembers()
 }

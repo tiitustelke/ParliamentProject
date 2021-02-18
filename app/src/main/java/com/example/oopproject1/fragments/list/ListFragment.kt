@@ -1,6 +1,7 @@
 package com.example.oopproject1.fragments.list
 
 import android.os.Bundle
+import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
@@ -10,6 +11,7 @@ import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.ViewModelProvider
 import com.example.oopproject1.API.ParliamentAPIService
 import com.example.oopproject1.R
+import com.example.oopproject1.data.MemberRepository
 import com.example.oopproject1.data.MemberViewModel
 import com.example.oopproject1.data.ParliamentMember
 import com.example.oopproject1.databinding.FragmentListBinding
@@ -42,20 +44,23 @@ class ListFragment : Fragment() {
             inflater,
             R.layout.fragment_list,container,false
         )
-        memberViewModel = ViewModelProvider(this).get(MemberViewModel::class.java)
+
         // Inflate the layout for this fragment
 
-        insertDataToDataBase()
         return binding.root
     }
 
+    override fun onActivityCreated(savedInstanceState: Bundle?) {
+        super.onActivityCreated(savedInstanceState)
+        memberViewModel = ViewModelProvider(this).get(MemberViewModel::class.java)
+        if(memberViewModel.getMembers().value.isNullOrEmpty()) {
+            insertDataToDataBase()
+        }
+    }
+
     private fun insertDataToDataBase() {
-        val firstName = "Matti"
-        val lastName = "Meikäläinen"
 
-        val member = ParliamentMember(123123,12,"Testi","Testinen","ps",false,"aosdkoasdk")
-
-        memberViewModel.addMember(member)
+        memberViewModel.addMembers()
 
         Toast.makeText(requireContext(), "success!",Toast.LENGTH_LONG).show()
     }

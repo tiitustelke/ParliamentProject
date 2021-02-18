@@ -8,7 +8,7 @@ import retrofit2.Retrofit
 import retrofit2.converter.moshi.MoshiConverterFactory
 import retrofit2.http.GET
 
-private const val BASE_URL = "http://users.metropolia.fi/"
+private const val BASE_URL = "https://users.metropolia.fi/"
 private val moshi = Moshi.Builder() // create an instance of Moshi
     .add(KotlinJsonAdapterFactory())
     .build()
@@ -18,7 +18,7 @@ private val retrofit = Retrofit.Builder() // create an instance of Retrofit and 
     .build()
 interface ParliamentAPIService {
     @GET("~tiituste/ParliamentData/members.json") //add here the end point
-    suspend fun getParliamentMembers(): ParliamentMember
+    suspend fun getParliamentMembers(): List<ParliamentMember>
 }
 object ParliamentApi {
     val retrofitService : ParliamentAPIService by lazy {
