@@ -13,6 +13,9 @@
         <action
             android:id="@+id/action_listFragment_to_parliamentMemberActivity"
             app:destination="@id/parliamentMemberActivity" />
+        <action
+            android:id="@+id/action_listFragment_to_home2"
+            app:destination="@id/fragment_home" />
     </fragment>
     <fragment
         android:id="@+id/parliamentMemberActivity"
@@ -25,4 +28,16 @@
             android:name="pos"
             app:argType="integer" />
     </fragment>
+    <fragment
+        android:id="@+id/fragment_home"
+        android:name="com.example.oopproject1.Home"
+        android:label="Home" >
+        <action
+            android:id="@+id/action_home2_to_listFragment"
+            app:destination="@id/listFragment" />
+    </fragment>
+    <activity
+        android:id="@+id/mainActivity2"
+        android:name="com.example.oopproject1.MainActivity"
+        android:label="MainActivity" />
 </navigation>
