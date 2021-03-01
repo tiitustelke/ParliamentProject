@@ -12,4 +12,6 @@ class MemberRepository(private val memberDao: MemberDao) {
     fun clearMembers() = memberDao.deleteMembers()
 
     fun getMember(pos: Int) = memberDao.getMember(pos)
+
+    fun getParties() = memberDao.getParties()
 }

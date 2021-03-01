@@ -21,4 +21,10 @@ interface MemberDao {
 
     @Query("DELETE FROM member_table")
     fun deleteMembers()
+
+    @Query("SELECT DISTINCT party FROM member_table ORDER BY party ASC")
+    fun getParties() : List<String>
+
+    @Query("SELECT * FROM member_table WHERE party = :party ORDER BY lastname ASC")
+    fun getMembersByParty(party: String) : LiveData<List<ParliamentMember>>
 }
