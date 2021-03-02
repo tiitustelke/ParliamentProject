@@ -9,13 +9,16 @@ import android.view.ViewGroup
 import android.widget.Toast
 import androidx.core.view.get
 import androidx.databinding.DataBindingUtil
+import androidx.lifecycle.LiveData
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.findNavController
 import androidx.navigation.fragment.findNavController
+import androidx.navigation.fragment.navArgs
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.oopproject1.R
 import com.example.oopproject1.data.MemberViewModel
+import com.example.oopproject1.data.ParliamentMember
 import com.example.oopproject1.databinding.FragmentListBinding
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
@@ -32,6 +35,8 @@ class ListFragment : Fragment(), ListAdapter.OnItemClickListener {
 
     private lateinit var memberViewModel: MemberViewModel
     private lateinit var binding: FragmentListBinding
+    private val args: ListFragmentArgs by navArgs()
+    //private val party = args.party
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -40,10 +45,17 @@ class ListFragment : Fragment(), ListAdapter.OnItemClickListener {
     }
 
     override fun onItemClick(position: Int) {
-
-        val action = ListFragmentDirections.actionListFragmentToParliamentMemberActivity(position)
-        findNavController().navigate(action)
-
+        var member: ParliamentMember
+        val party = args.party
+        GlobalScope.launch {
+            if(party == null) {
+                member = memberViewModel.getMember(position).await()
+            } else {
+                member = memberViewModel.getMemberByParty(party.abbr,position).await()
+            }
+            val action = ListFragmentDirections.actionListFragmentToParliamentMemberActivity(member)
+            findNavController().navigate(action)
+        }
     }
 
     override fun onCreateView(
@@ -60,10 +72,17 @@ class ListFragment : Fragment(), ListAdapter.OnItemClickListener {
         recyclerView.adapter = adapter
         recyclerView.layoutManager = LinearLayoutManager(requireContext())
 
+        val party = args.party
+        if(party == null) {
+            memberViewModel.getMembers().observe(viewLifecycleOwner, Observer { ParliamentMember ->
+                adapter.setMemberData(ParliamentMember)
+            })
+        } else {
 
-        memberViewModel.getMembers().observe(viewLifecycleOwner, Observer { ParliamentMember ->
-            adapter.setMemberData(ParliamentMember)
-        })
+            memberViewModel.getMembersByParty(party.abbr).observe(viewLifecycleOwner, Observer { ParliamentMember ->
+                adapter.setMemberData(ParliamentMember)
+            })
+        }
         return binding.root
     }
 

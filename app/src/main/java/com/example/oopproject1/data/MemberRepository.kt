@@ -14,4 +14,8 @@ class MemberRepository(private val memberDao: MemberDao) {
     fun getMember(pos: Int) = memberDao.getMember(pos)
 
     fun getParties() = memberDao.getParties()
+
+    fun getMembersByParty(party: String) = memberDao.getMembersByParty(party)
+
+    fun getMemberByParty(party: String, pos: Int) = memberDao.getMemberByParty(party, pos)
 }

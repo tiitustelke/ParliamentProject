@@ -54,7 +54,7 @@ class ParliamentMemberActivity : Fragment() {
         )
 
         GlobalScope.launch {
-            val member = memberViewModel.getMember(args.pos).await()
+            val member = args.member
             addParliamentMember(member)
         }
 

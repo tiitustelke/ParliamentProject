@@ -15,7 +15,6 @@ interface MemberDao {
     @Query("SELECT * FROM member_table ORDER BY lastname ASC LIMIT 1 OFFSET :offset")
     fun getMember(offset: Int) : ParliamentMember
 
-
     @Query("SELECT * FROM member_table ORDER BY lastname ASC")
     fun getParliamentMembers() : LiveData<List<ParliamentMember>>
 
@@ -27,4 +26,7 @@ interface MemberDao {
 
     @Query("SELECT * FROM member_table WHERE party = :party ORDER BY lastname ASC")
     fun getMembersByParty(party: String) : LiveData<List<ParliamentMember>>
+
+    @Query("SELECT * FROM member_table WHERE party = :party ORDER BY lastname ASC LIMIT 1 OFFSET :offset")
+    fun getMemberByParty(party: String, offset: Int) : ParliamentMember
 }

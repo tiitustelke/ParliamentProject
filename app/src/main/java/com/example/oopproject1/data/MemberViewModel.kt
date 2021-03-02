@@ -38,7 +38,11 @@ class MemberViewModel(application: Application): AndroidViewModel(application) {
 
     fun getMembers() =  repository.getMembers()
 
+    fun getMembersByParty(party: String) = repository.getMembersByParty(party)
+
     suspend fun getMember(pos: Int) = viewModelScope.async(Dispatchers.IO) { repository.getMember(pos) }
+
+    fun getMemberByParty(party: String, pos: Int) = viewModelScope.async(Dispatchers.IO) { repository.getMemberByParty(party, pos) }
 
     fun deleteMembers() = viewModelScope.async(Dispatchers.IO) { repository.clearMembers() }
 

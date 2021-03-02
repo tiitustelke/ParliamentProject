@@ -18,7 +18,9 @@
             app:destination="@id/homeFragment" />
         <argument
             android:name="party"
-            app:argType="com.example.oopproject1.data.Party" />
+            app:argType="com.example.oopproject1.data.Party"
+            app:nullable="true"
+            android:defaultValue="@null" />
     </fragment>
     <fragment
         android:id="@+id/parliamentMemberActivity"
@@ -28,8 +30,8 @@
             android:id="@+id/action_parliamentMemberActivity_to_listFragment"
             app:destination="@id/listFragment" />
         <argument
-            android:name="pos"
-            app:argType="integer" />
+            android:name="member"
+            app:argType="com.example.oopproject1.data.ParliamentMember" />
     </fragment>
     <fragment
         android:id="@+id/homeFragment"
