@@ -47,32 +47,6 @@ class MainActivity : AppCompatActivity() {
             }
             true
         }
-        checkDataIsValid()
     }
-
-    fun checkDataIsValid() {
-
-        if(memberViewModel.getMembers().value.isNullOrEmpty()) {
-            addMembersToDataBase()
-        }
-    }
-
-    private fun addMembersToDataBase() {
-        val context = this
-        if(memberViewModel.addMembers()) {
-            Toast.makeText(context, "Success!", Toast.LENGTH_LONG).show()
-        } else {
-            Toast.makeText(context, "Adding members failed!", Toast.LENGTH_LONG).show()
-        }
-    }
-
-    private fun getMember() {
-
-    }
-
-    private suspend fun updateMembers() {
-        memberViewModel.deleteMembers().await()
-        addMembersToDataBase()
-    }
-
 }
+

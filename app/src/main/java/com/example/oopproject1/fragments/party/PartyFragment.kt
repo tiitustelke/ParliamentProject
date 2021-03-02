@@ -54,8 +54,7 @@ class PartyFragment : Fragment(), PartyAdapter.OnItemClickListener {
         recyclerView.layoutManager = manager
 
         adapter.setPartyData(parties)
-
-        // Inflate the layout for this fragment
+        
         return binding.root
     }
 

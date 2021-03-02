@@ -85,30 +85,4 @@ class ListFragment : Fragment(), ListAdapter.OnItemClickListener {
         }
         return binding.root
     }
-
-    override fun onActivityCreated(savedInstanceState: Bundle?) {
-        super.onActivityCreated(savedInstanceState)
-
-        if(memberViewModel.getMembers().value.isNullOrEmpty()) {
-            addMembersToDataBase()
-        }
-    }
-
-    private fun addMembersToDataBase() {
-        if(memberViewModel.addMembers()) {
-            Toast.makeText(requireContext(), "Success!", Toast.LENGTH_LONG).show()
-        } else {
-            Toast.makeText(requireContext(), "Adding members failed!", Toast.LENGTH_LONG).show()
-        }
-    }
-
-    private fun getMember() {
-
-    }
-
-    private suspend fun updateMembers() {
-        memberViewModel.deleteMembers().await()
-        addMembersToDataBase()
-    }
-
 }

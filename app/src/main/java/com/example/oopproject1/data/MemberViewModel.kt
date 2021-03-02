@@ -1,15 +1,22 @@
 package com.example.oopproject1.data
 
 import android.app.Application
+import android.content.Context
 import android.util.Log
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
+import androidx.work.OneTimeWorkRequest
+import androidx.work.PeriodicWorkRequestBuilder
+import androidx.work.WorkManager
 import com.example.oopproject1.API.ParliamentApi
+import com.example.oopproject1.worker.MemberUpdater
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.async
 import kotlinx.coroutines.launch
+import java.util.concurrent.TimeUnit
+import kotlin.coroutines.coroutineContext
 
 class MemberViewModel(application: Application): AndroidViewModel(application) {
 
@@ -19,21 +26,14 @@ class MemberViewModel(application: Application): AndroidViewModel(application) {
     init {
         val memberDao = MemberDataBase.getDatabase(application).memberDao()
         repository = MemberRepository(memberDao)
+        updateMembers()
     }
 
-    fun addMembers(): Boolean {
-        viewModelScope.launch(Dispatchers.IO) {
-            try {
-
-                val members =
-                    ParliamentApi.retrofitService.getParliamentMembers() //use here the covidApi to get the values
-                members.forEach { repository.addMember(it) }
-
-            } catch (e: Exception) {
-                Log.d("***", e.toString())
-            }
-        }
-        return true
+    fun updateMembers() {
+        val memberUpdater = PeriodicWorkRequestBuilder<MemberUpdater>(4,TimeUnit.HOURS)
+                .build()
+        val context: Context = getApplication()
+        WorkManager.getInstance(context).enqueue(memberUpdater)
     }
 
     fun getMembers() =  repository.getMembers()

@@ -4,7 +4,7 @@ import androidx.lifecycle.LiveData
 
 class MemberRepository(private val memberDao: MemberDao) {
 
-    suspend fun addMember(member: ParliamentMember) {
+    fun addMember(member: ParliamentMember) {
         memberDao.addParliamentMember(member)
     }
     fun getMembers() = memberDao.getParliamentMembers()
