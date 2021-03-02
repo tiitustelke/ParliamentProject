@@ -8,6 +8,7 @@ import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
+import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.oopproject1.R
 import com.example.oopproject1.data.Party
@@ -48,7 +49,9 @@ class PartyFragment : Fragment(), PartyAdapter.OnItemClickListener {
         val adapter = PartyAdapter(this)
         val recyclerView = binding.partyView
         recyclerView.adapter = adapter
-        recyclerView.layoutManager = LinearLayoutManager(requireContext())
+
+        val manager = GridLayoutManager(activity, 2, GridLayoutManager.VERTICAL, false)
+        recyclerView.layoutManager = manager
 
         adapter.setPartyData(parties)
 
