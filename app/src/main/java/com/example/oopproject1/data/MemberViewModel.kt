@@ -26,15 +26,9 @@ class MemberViewModel(application: Application): AndroidViewModel(application) {
     init {
         val memberDao = MemberDataBase.getDatabase(application).memberDao()
         repository = MemberRepository(memberDao)
-        updateMembers()
     }
 
-    fun updateMembers() {
-        val memberUpdater = PeriodicWorkRequestBuilder<MemberUpdater>(4,TimeUnit.HOURS)
-                .build()
-        val context: Context = getApplication()
-        WorkManager.getInstance(context).enqueue(memberUpdater)
-    }
+    fun updateMembers() = repository.updateMembers(getApplication())
 
     fun getMembers() =  repository.getMembers()
 

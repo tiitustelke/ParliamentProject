@@ -26,6 +26,8 @@ class MainActivity : AppCompatActivity() {
         val view = binding.root
         setContentView(view)
 
+        memberViewModel.updateMembers()
+
         val navHostFragment =
             supportFragmentManager.findFragmentById(R.id.fragment_view) as NavHostFragment
         val navController = navHostFragment.navController

@@ -1,28 +1,75 @@
 package com.example.oopproject1.image
 
+import android.content.Context
+import android.content.ContextWrapper
 import android.graphics.Bitmap
+import android.graphics.BitmapFactory
+import android.util.Log
 import android.util.LruCache
+import android.view.View
+import android.widget.ImageView
+import com.example.oopproject1.R
+import java.io.File
+import java.io.FileInputStream
+import java.io.FileOutputStream
+import java.security.AccessController.getContext
 
-class ImageCache {
-    private lateinit var memoryCache: LruCache<String, Bitmap>
+/**
+ * https://stackoverflow.com/a/17674787
+ */
+class ImageCache(appContext: Context) {
+    private val context: Context = appContext
+    val cw = ContextWrapper(context)
+    // path to /data/data/yourapp/app_data/imageDir
+    val directory = cw.getDir("imageCache", Context.MODE_PRIVATE)
 
-    init {
-        // Get max available VM memory, exceeding this amount will throw an
-        // OutOfMemory exception. Stored in kilobytes as LruCache takes an
-        // int in its constructor.
-        val maxMemory = (Runtime.getRuntime().maxMemory() / 1024).toInt()
+    fun cacheImage(name: String,bitmap: Bitmap): String {
 
-        // Use 1/8th of the available memory for this memory cache.
-        val cacheSize = maxMemory / 8
+        // Create image directory
+        val path = File(directory,name)
 
-        memoryCache = object : LruCache<String, Bitmap>(cacheSize) {
+        var fos: FileOutputStream?  = null
 
-            override fun sizeOf(key: String, bitmap: Bitmap): Int {
-                // The cache size will be measured in kilobytes rather than
-                // number of items.
-                return bitmap.byteCount / 1024
+        try {
+            fos = FileOutputStream(path)
+            // compress BitMap object for OutPutStream
+            bitmap.compress(Bitmap.CompressFormat.JPEG, 100, fos)
+        }
+        catch (e: Error) {
+            Log.d("ImageCompressErr",e.toString())
+        }
+        finally {
+            try {
+                fos?.close()
+            }
+            catch (e: Error) {
+                Log.d("ImageCacheErr",e.toString())
             }
         }
+        return directory.absolutePath
     }
 
+    fun loadFromCache(name: String): Bitmap? {
+        var bitmap: Bitmap? = null
+        try {
+            val path = File(directory, name)
+
+            bitmap = BitmapFactory.decodeStream(FileInputStream(path))
+        }
+        catch (e: Error) {
+            Log.d("FileLoadErr",e.toString())
+        }
+        return bitmap
+    }
+
+    fun checkFileExists(name: String): Boolean {
+        val file = File(directory, name)
+
+        return file.exists()
+    }
+
+    fun fetchImage(url: String): Bitmap? {
+        val ife = ImageFetcher()
+        return ife.fetchImage(url)
+    }
 }

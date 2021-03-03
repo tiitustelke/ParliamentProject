@@ -24,7 +24,7 @@ class MemberUpdater(appContext: Context, workerParams: WorkerParameters):
             members.forEach { repository.addMember(it) }
 
         } catch (e: Exception) {
-            Log.d("***", e.toString())
+            Log.d("MemberUpdateErr", e.toString())
             return Result.failure()
         }
         return Result.success()
