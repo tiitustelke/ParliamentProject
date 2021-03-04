@@ -9,6 +9,7 @@ import com.example.oopproject1.R
 import com.example.oopproject1.data.MemberDataBase
 import com.example.oopproject1.data.MemberRepository
 import com.example.oopproject1.data.Party
+import com.example.oopproject1.data.PartyData
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.async
@@ -29,52 +30,18 @@ class PartyViewModel(application: Application): AndroidViewModel(application) {
         val partyNames = mutableListOf<Party>()
         viewModelScope.launch(Dispatchers.IO) {
         val parties = getParties()
+        val partyData = PartyData.parties
+            val data = partyData.map { it.abbr }
+        parties.forEach { newParty ->
 
-        parties.forEach {
-            when(it) {
-
-                "kd" -> {
-                    partyNames.add(Party(it,"Suomen Kristillisdemokraatit", R.drawable.kd_logo))
-                }
-
-                "kesk" -> {
-                    partyNames.add(Party(it,"Suomen Keskusta",R.drawable.kesk_logo))
-                }
-
-                "kok" -> {
-                    partyNames.add(Party(it,"Kansallinen Kokoomus",R.drawable.kok_logo))
-                }
-
-                "liik" -> {
-                    partyNames.add(Party(it,"Liike Nyt",R.drawable.liik_logo))
-                }
-
-                "ps" -> {
-                    partyNames.add(Party(it,"Perussuomalaiset",R.drawable.ps_logo))
-                }
-
-                "r" -> {
-                    partyNames.add(Party(it,"Suomen ruotsalainen kansanpuolue",R.drawable.r_logo))
-                }
-
-                "sd" -> {
-                    partyNames.add(Party(it,"Suomen Sosiaalidemokraattinen Puolue",R.drawable.sd_log))
-                }
-
-                "vas" -> {
-                    partyNames.add(Party(it,"Vasemmistoliitto",R.drawable.vas_logo))
-                }
-
-                "vihr" -> {
-                    partyNames.add(Party(it,"Vihreä liitto",R.drawable.vihr_logo))
-                }
-
-                else -> {
-                    partyNames.add(Party(it,it,R.drawable.sale))
-                }
-
+            if (data.contains(newParty)) {
+                val party = partyData.first { it.abbr == newParty }
+                partyNames.add(party)
             }
-        }
+            else {
+                partyNames.add(Party(newParty,newParty,R.drawable.sale))
+            }
+            }
         }
         return partyNames
     }

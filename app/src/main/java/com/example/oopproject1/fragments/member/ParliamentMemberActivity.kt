@@ -72,14 +72,15 @@ class ParliamentMemberActivity : Fragment() {
         likes = Random.nextInt(-500,500)
 
     }*/
-    fun setMember(image: Bitmap?) {
+   private fun setMember(image: Bitmap?) {
 
-        binding.name = member.firstname
+        binding.firstName = member.firstname
+       binding.lastName = member.lastname
         binding.party = member.party
         binding.likes = likes.toString()
 
         binding.buttonNext.setOnClickListener {
-            binding.name = name
+            binding.firstName = name
             binding.party = party
             binding.likes = likes.toString()
         }
@@ -88,7 +89,7 @@ class ParliamentMemberActivity : Fragment() {
     }
 
 
-    suspend fun setImage() {
+    private suspend fun setImage() {
 
         val image = viewModel.getImage(member)
         GlobalScope.launch(Dispatchers.Main) {
