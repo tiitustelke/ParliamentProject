@@ -20,7 +20,6 @@ import kotlin.coroutines.coroutineContext
 
 class MemberViewModel(application: Application): AndroidViewModel(application) {
 
-    //private val _getAllMembers = MutableLiveData<List<ParliamentMember>>()
     private val repository: MemberRepository
 
     init {

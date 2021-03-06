@@ -2,26 +2,21 @@ package com.example.oopproject1
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.view.MenuItem
-import android.widget.Toast
 import androidx.lifecycle.ViewModelProvider
-import androidx.navigation.findNavController
 import androidx.navigation.fragment.NavHostFragment
-import androidx.navigation.fragment.findNavController
-import com.example.oopproject1.data.MemberViewModel
+import com.example.oopproject1.data.PartyMemberViewModel
 import com.example.oopproject1.databinding.ActivityMainBinding
-import com.example.oopproject1.fragments.list.ListFragmentDirections
 
 class MainActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityMainBinding
-    private lateinit var memberViewModel: MemberViewModel
+    private lateinit var memberViewModel: PartyMemberViewModel
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
         binding = ActivityMainBinding.inflate(layoutInflater)
-        memberViewModel = ViewModelProvider(this).get(MemberViewModel::class.java)
+        memberViewModel = ViewModelProvider(this).get(PartyMemberViewModel::class.java)
 
         val view = binding.root
         setContentView(view)

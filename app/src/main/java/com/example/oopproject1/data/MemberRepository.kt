@@ -29,4 +29,5 @@ class MemberRepository(private val memberDao: MemberDao) {
                 .build()
         WorkManager.getInstance(context).enqueue(memberUpdater)
     }
+
 }

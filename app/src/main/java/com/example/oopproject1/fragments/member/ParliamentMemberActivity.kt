@@ -2,23 +2,17 @@ package com.example.oopproject1.fragments.member
 
 import android.graphics.Bitmap
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Toast
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.navArgs
-import com.example.oopproject1.ParliamentMembersData
 import com.example.oopproject1.R
-import com.example.oopproject1.data.MemberViewModel
 import com.example.oopproject1.data.ParliamentMember
 import com.example.oopproject1.databinding.FragmentParliamentMemberBinding
 import kotlinx.coroutines.*
-import kotlin.coroutines.coroutineContext
-import kotlin.random.Random
 
 // TODO: Rename parameter arguments, choose names that match
 // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -36,7 +30,7 @@ class ParliamentMemberActivity : Fragment() {
     private var party: String = "puolue"
     private var counter = 0
     private val args by navArgs<ParliamentMemberActivityArgs>()
-    private lateinit var viewModel: ParliamentViewModel
+    private lateinit var viewModel: ParliamentMemberViewModel
     private lateinit var binding: FragmentParliamentMemberBinding
     private lateinit var member: ParliamentMember
 
@@ -49,7 +43,7 @@ class ParliamentMemberActivity : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        viewModel = ViewModelProvider(this).get(ParliamentViewModel::class.java)
+        viewModel = ViewModelProvider(this).get(ParliamentMemberViewModel::class.java)
 
         binding = DataBindingUtil.inflate<FragmentParliamentMemberBinding>(
             inflater, R.layout.fragment_parliament_member,container,false

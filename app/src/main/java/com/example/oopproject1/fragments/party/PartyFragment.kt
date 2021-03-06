@@ -32,7 +32,7 @@ class PartyFragment : Fragment(), PartyAdapter.OnItemClickListener {
 
     override fun onItemClick(position: Int) {
         val party = parties[position]
-        val action = PartyFragmentDirections.actionPartyFragmentToListFragment(party)
+        val action = PartyFragmentDirections.actionPartyFragmentToPartyMemberList(party)
 
         findNavController().navigate(action)
     }

@@ -16,11 +16,6 @@
         <action
             android:id="@+id/action_listFragment_to_home2"
             app:destination="@id/homeFragment" />
-        <argument
-            android:name="party"
-            app:argType="com.example.oopproject1.data.Party"
-            app:nullable="true"
-            android:defaultValue="@null" />
     </fragment>
     <fragment
         android:id="@+id/parliamentMemberActivity"
@@ -32,6 +27,9 @@
         <argument
             android:name="member"
             app:argType="com.example.oopproject1.data.ParliamentMember" />
+        <action
+            android:id="@+id/action_parliamentMemberActivity_to_partyMemberList"
+            app:destination="@id/partyMemberList" />
     </fragment>
     <fragment
         android:id="@+id/homeFragment"
@@ -57,7 +55,21 @@
             android:id="@+id/action_partyFragment_to_homeFragment"
             app:destination="@id/homeFragment" />
         <action
-            android:id="@+id/action_partyFragment_to_listFragment"
-            app:destination="@id/listFragment" />
+            android:id="@+id/action_partyFragment_to_partyMemberList"
+            app:destination="@id/partyMemberList" />
+    </fragment>
+    <fragment
+        android:id="@+id/partyMemberList"
+        android:name="com.example.oopproject1.fragments.list.PartyMemberList"
+        android:label="PartyMemberList" >
+        <action
+            android:id="@+id/action_partyMemberList_to_parliamentMemberActivity"
+            app:destination="@id/parliamentMemberActivity" />
+        <action
+            android:id="@+id/action_partyMemberList_to_partyFragment"
+            app:destination="@id/partyFragment" />
+        <argument
+            android:name="party"
+            app:argType="com.example.oopproject1.data.Party" />
     </fragment>
 </navigation>
