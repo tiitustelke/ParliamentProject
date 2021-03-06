@@ -29,18 +29,18 @@ class PartyViewModel(application: Application): AndroidViewModel(application) {
     fun getPartyNames(): List<Party> {
         val partyNames = mutableListOf<Party>()
         viewModelScope.launch(Dispatchers.IO) {
-        val parties = getParties()
-        val partyData = PartyData.parties
+            val parties = getParties()
+            val partyData = PartyData.parties
             val data = partyData.map { it.abbr }
-        parties.forEach { newParty ->
+            parties.forEach { newParty ->
 
-            if (data.contains(newParty)) {
-                val party = partyData.first { it.abbr == newParty }
-                partyNames.add(party)
-            }
-            else {
-                partyNames.add(Party(newParty,newParty,R.drawable.sale))
-            }
+                if (data.contains(newParty)) {
+                    val party = partyData.first { it.abbr == newParty }
+                    partyNames.add(party)
+                }
+                else {
+                    partyNames.add(Party(newParty,newParty,R.drawable.sale))
+                }
             }
         }
         return partyNames

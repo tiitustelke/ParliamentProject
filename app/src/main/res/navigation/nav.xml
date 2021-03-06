@@ -60,7 +60,7 @@
     </fragment>
     <fragment
         android:id="@+id/partyMemberList"
-        android:name="com.example.oopproject1.fragments.list.PartyMemberList"
+        android:name="com.example.oopproject1.fragments.partymembers.PartyMemberList"
         android:label="PartyMemberList" >
         <action
             android:id="@+id/action_partyMemberList_to_parliamentMemberActivity"

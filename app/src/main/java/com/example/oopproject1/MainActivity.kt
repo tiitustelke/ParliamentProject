@@ -4,19 +4,19 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.NavHostFragment
-import com.example.oopproject1.data.PartyMemberViewModel
+import com.example.oopproject1.data.MemberViewModel
 import com.example.oopproject1.databinding.ActivityMainBinding
 
 class MainActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityMainBinding
-    private lateinit var memberViewModel: PartyMemberViewModel
+    private lateinit var memberViewModel: MemberViewModel
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
         binding = ActivityMainBinding.inflate(layoutInflater)
-        memberViewModel = ViewModelProvider(this).get(PartyMemberViewModel::class.java)
+        memberViewModel = ViewModelProvider(this).get(MemberViewModel::class.java)
 
         val view = binding.root
         setContentView(view)

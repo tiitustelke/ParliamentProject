@@ -29,4 +29,5 @@ interface MemberDao {
 
     @Query("SELECT * FROM member_table WHERE party = :party ORDER BY lastname ASC LIMIT 1 OFFSET :offset")
     fun getMemberByParty(party: String, offset: Int) : ParliamentMember
+
 }

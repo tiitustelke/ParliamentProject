@@ -11,7 +11,9 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.navArgs
 import com.example.oopproject1.R
 import com.example.oopproject1.data.ParliamentMember
+import com.example.oopproject1.data.PartyData
 import com.example.oopproject1.databinding.FragmentParliamentMemberBinding
+import kotlinx.android.synthetic.main.member_row.view.*
 import kotlinx.coroutines.*
 
 // TODO: Rename parameter arguments, choose names that match
@@ -51,8 +53,10 @@ class ParliamentMemberActivity : Fragment() {
             //addParliamentMember(member)
 
         GlobalScope.launch(Dispatchers.IO) { setImage() }
+        setMember()
 
-
+        binding.likeButton.setOnClickListener { addLike() }
+        binding.dislikeButton.setOnClickListener { removeLike() }
         // Inflate the layout for this fragment
         return binding.root
     }
@@ -66,28 +70,44 @@ class ParliamentMemberActivity : Fragment() {
         likes = Random.nextInt(-500,500)
 
     }*/
-   private fun setMember(image: Bitmap?) {
-
-        binding.firstName = member.firstname
-       binding.lastName = member.lastname
-        binding.party = member.party
+    private fun addLike() {
+       viewModel.plusVote(member.hetekaId)
+       likes++
+       binding.likes = likes.toString()
+   }
+    private fun removeLike() {
+        viewModel.minusVote(member.hetekaId)
+        likes--
         binding.likes = likes.toString()
+    }
 
-        binding.buttonNext.setOnClickListener {
-            binding.firstName = name
-            binding.party = party
-            binding.likes = likes.toString()
-        }
+   private fun setMember() {
+       val party = PartyData.parties.first { it.abbr == member.party }
 
-       image?.let {   binding.photo.setImageBitmap(it) }
+       binding.partyImage.setImageResource(party.logoID)
+       if (member.minister) binding.memberTitle.text = "Ministeri"
+       else binding.memberTitle.text = "Kansanedustaja"
+
+       binding.party = party.name
+       binding.firstName = member.firstname
+       binding.lastName = member.lastname
+
+       binding.likes = likes.toString()
+
+       binding.buttonNext.setOnClickListener {
+           binding.firstName = name
+           binding.likes = likes.toString()
+       }
+
     }
 
 
     private suspend fun setImage() {
-
+        likes = viewModel.getVotes(member.hetekaId)
         val image = viewModel.getImage(member)
         GlobalScope.launch(Dispatchers.Main) {
-            setMember(image)
+            binding.likes = likes.toString()
+            binding.photo.setImageBitmap(image)
         }
     }
 }

@@ -47,7 +47,7 @@ class PartyFragment : Fragment(), PartyAdapter.OnItemClickListener {
         )
 
         val adapter = PartyAdapter(this)
-        val recyclerView = binding.partyView
+        val recyclerView = binding.partyListView
         recyclerView.adapter = adapter
 
         val manager = GridLayoutManager(activity, 2, GridLayoutManager.VERTICAL, false)

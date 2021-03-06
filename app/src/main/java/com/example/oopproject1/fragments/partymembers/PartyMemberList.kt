@@ -1,4 +1,4 @@
-package com.example.oopproject1.fragments.list
+package com.example.oopproject1.fragments.partymembers
 
 import android.os.Bundle
 import androidx.fragment.app.Fragment
@@ -12,9 +12,7 @@ import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.oopproject1.R
-import com.example.oopproject1.data.PartyMemberViewModel
-import com.example.oopproject1.data.ParliamentMember
-import com.example.oopproject1.databinding.FragmentListBinding
+
 import com.example.oopproject1.databinding.FragmentPartyMemberListBinding
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.GlobalScope
@@ -41,10 +39,9 @@ class PartyMemberList : Fragment(), PartyMemberAdapter.OnItemClickListener {
     }
 
     override fun onItemClick(position: Int) {
-        var member: ParliamentMember
         val party = args.party
         GlobalScope.launch(Dispatchers.IO) {
-            member = partyMemberViewModel.getMemberByParty(party.abbr,position).await()
+            val member = partyMemberViewModel.getMemberByParty(party.abbr,position).await()
 
             val action = PartyMemberListDirections.actionPartyMemberListToParliamentMemberActivity(member)
             findNavController().navigate(action)
@@ -68,8 +65,8 @@ class PartyMemberList : Fragment(), PartyMemberAdapter.OnItemClickListener {
         val party = args.party
 
         partyMemberViewModel.getMembersByParty(party.abbr).observe(viewLifecycleOwner, Observer { ParliamentMember ->
-                adapter.setMemberData(ParliamentMember)
-            })
+            adapter.setMemberData(ParliamentMember)
+        })
 
         return binding.root
     }
