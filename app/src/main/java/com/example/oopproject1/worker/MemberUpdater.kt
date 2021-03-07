@@ -18,7 +18,8 @@ class MemberUpdater(appContext: Context, workerParams: WorkerParameters):
         val memberDao = MemberDataBase.getDatabase(appContext).memberDao()
         repository = MemberRepository(memberDao)
         val voteDao = MemberDataBase.getDatabase(appContext).voteDao()
-        voteRepository = VoteRepository(voteDao)
+        val commentDao = MemberDataBase.getDatabase(appContext).commentDao()
+        voteRepository = VoteRepository(voteDao, commentDao)
     }
     override suspend fun doWork(): Result {
         try {

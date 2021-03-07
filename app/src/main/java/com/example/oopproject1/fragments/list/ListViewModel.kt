@@ -22,6 +22,6 @@ class ListViewModel(application: Application): AndroidViewModel(application) {
 
     fun getMembers() =  repository.getMembers()
 
-    suspend fun getMember(pos: Int) = viewModelScope.async(Dispatchers.IO) { repository.getMember(pos) }
+    fun getMember(pos: Int) = viewModelScope.async(Dispatchers.IO) { repository.getMember(pos) }
 
 }

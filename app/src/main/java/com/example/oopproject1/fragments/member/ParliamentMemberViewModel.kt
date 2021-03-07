@@ -3,7 +3,10 @@ package com.example.oopproject1.fragments.member
 import android.app.Application
 import android.graphics.Bitmap
 import androidx.lifecycle.AndroidViewModel
+import androidx.lifecycle.LiveData
+import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
+import com.example.oopproject1.data.Comment
 import com.example.oopproject1.data.MemberDataBase
 import com.example.oopproject1.data.ParliamentMember
 import com.example.oopproject1.data.VoteRepository
@@ -20,12 +23,17 @@ class ParliamentMemberViewModel(application: Application): AndroidViewModel(appl
     init {
         repository = ImageRepository(application)
         val voteDao = MemberDataBase.getDatabase(application).voteDao()
-        voteRepository = VoteRepository(voteDao)
+        val commentDao = MemberDataBase.getDatabase(application).commentDao()
+        voteRepository = VoteRepository(voteDao, commentDao)
     }
 
     suspend fun getImage(member: ParliamentMember): Bitmap? = repository.getImage(member)
 
     suspend fun getVotes(hetekaId: Int): Int = viewModelScope.async(Dispatchers.IO) { voteRepository.getVotes(hetekaId) }.await()
+
+    fun getComments(hetekaId: Int): LiveData<List<Comment>> = voteRepository.getComments(hetekaId)
+
+    fun addComment(comment: Comment) = viewModelScope.launch(Dispatchers.IO) { voteRepository.addComment(comment) }
 
     fun minusVote(hetekaId: Int) = viewModelScope.launch(Dispatchers.IO) { voteRepository.minusVote(hetekaId) }
 

@@ -1,19 +1,22 @@
 package com.example.oopproject1.fragments.member
 
-import android.graphics.Bitmap
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
+import android.view.View.*
 import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.navArgs
+import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.oopproject1.R
+import com.example.oopproject1.data.Comment
 import com.example.oopproject1.data.ParliamentMember
 import com.example.oopproject1.data.PartyData
 import com.example.oopproject1.databinding.FragmentParliamentMemberBinding
-import kotlinx.android.synthetic.main.member_row.view.*
+import com.example.oopproject1.fragments.partymembers.PartyMemberAdapter
 import kotlinx.coroutines.*
 
 // TODO: Rename parameter arguments, choose names that match
@@ -31,6 +34,7 @@ class ParliamentMemberActivity : Fragment() {
     private var likes: Int = 0
     private var party: String = "puolue"
     private var counter = 0
+    private var comments = arrayListOf<String>()
     private val args by navArgs<ParliamentMemberActivityArgs>()
     private lateinit var viewModel: ParliamentMemberViewModel
     private lateinit var binding: FragmentParliamentMemberBinding
@@ -52,11 +56,52 @@ class ParliamentMemberActivity : Fragment() {
         )
             //addParliamentMember(member)
 
-        GlobalScope.launch(Dispatchers.IO) { setImage() }
+        GlobalScope.launch(Dispatchers.IO) { setImageAndLikes() }
         setMember()
 
-        binding.likeButton.setOnClickListener { addLike() }
-        binding.dislikeButton.setOnClickListener { removeLike() }
+        val adapter = CommentAdapter()
+        val recyclerView = binding.commentView
+        recyclerView.adapter = adapter
+        recyclerView.layoutManager = LinearLayoutManager(requireContext())
+
+        viewModel.getComments(member.hetekaId).observe(viewLifecycleOwner, Observer { Comment ->
+            adapter.setCommentData(Comment)
+        })
+
+        binding.sendButton.setOnClickListener {
+            if (!binding.editTextComment.text.isNullOrBlank()) {
+                viewModel.addComment(Comment(0, member.hetekaId, binding.editTextComment.text.toString()))
+            }
+        }
+
+        var voted = false
+
+        binding.likeButton.setOnClickListener {
+
+            if (voted) {
+                binding.dislikeButton.visibility = VISIBLE
+                voted = false
+            }
+            else {
+                binding.likeButton.visibility = INVISIBLE
+                voted = true
+            }
+            addLike()
+        }
+
+        binding.dislikeButton.setOnClickListener {
+
+            if (voted) {
+                binding.likeButton.visibility = VISIBLE
+                voted = false
+            }
+            else {
+                binding.dislikeButton.visibility = INVISIBLE
+                voted = true
+            }
+            removeLike()
+        }
+
         // Inflate the layout for this fragment
         return binding.root
     }
@@ -70,11 +115,13 @@ class ParliamentMemberActivity : Fragment() {
         likes = Random.nextInt(-500,500)
 
     }*/
+
     private fun addLike() {
        viewModel.plusVote(member.hetekaId)
        likes++
        binding.likes = likes.toString()
    }
+
     private fun removeLike() {
         viewModel.minusVote(member.hetekaId)
         likes--
@@ -93,16 +140,10 @@ class ParliamentMemberActivity : Fragment() {
        binding.lastName = member.lastname
 
        binding.likes = likes.toString()
-
-       binding.buttonNext.setOnClickListener {
-           binding.firstName = name
-           binding.likes = likes.toString()
-       }
-
     }
 
 
-    private suspend fun setImage() {
+    private suspend fun setImageAndLikes() {
         likes = viewModel.getVotes(member.hetekaId)
         val image = viewModel.getImage(member)
         GlobalScope.launch(Dispatchers.Main) {
