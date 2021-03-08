@@ -4,17 +4,21 @@ import android.app.Application
 import android.graphics.Bitmap
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
-import com.example.oopproject1.data.Comment
-import com.example.oopproject1.data.MemberDataBase
-import com.example.oopproject1.data.ParliamentMember
-import com.example.oopproject1.data.VoteRepository
+import com.example.oopproject1.data.*
 import com.example.oopproject1.image.ImageRepository
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.async
 import kotlinx.coroutines.launch
 
+
+/**
+ * @author Tiitus Telke
+ * @version 8.3.2021
+ * Viewmodel for ParliamentMemberViewModel. Get data from ImageRepository and VoteRepository.
+ * @see ImageRepository
+ * @see VoteRepository
+ */
 class ParliamentMemberViewModel(application: Application): AndroidViewModel(application) {
 
     private val repository: ImageRepository

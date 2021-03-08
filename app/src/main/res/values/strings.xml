@@ -1,10 +1,14 @@
 <resources>
     <string name="app_name">Eduskuntasovellus</string>
-    <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name = "user_pref">selected_username</string>
+
     <string name="home_view">Etusivu</string>
     <string name="list_all_view">Kaikki</string>
     <string name="party_view">Puolueet</string>
+
+    <string name="name_not_set">Anonyymi</string>
+    <string name="member">Kansanedustaja</string>
+    <string name="minister">Ministeri</string>
 
     <string name="introduction">Tervetuloa Tiitus Telken projektityönä tehtyyn eduskuntasovellukseen.\n\n Sovellus tallentaa datan eduskunnan palvelimelta puhelimeesi. Alhaalta löytyvästä valikosta voit selata eduskunnan jäseniä puolueittain. Laita halutessasi alhaalla olevaan kenttään käyttäjänimesi</string>
 

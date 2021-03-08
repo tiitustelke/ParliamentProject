@@ -1,5 +1,10 @@
 package com.example.oopproject1.data
 
+/**
+ * @author Tiitus Telke
+ * @version 8.3.2021
+ * This class is for storing full names and logo ids of parties
+ */
 class VoteRepository(private val voteDao: VoteDao, private val commentDao: CommentDao) {
 
     fun plusVote(hetakaId: Int) = voteDao.plusVote(hetakaId)

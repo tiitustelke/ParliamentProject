@@ -6,10 +6,13 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.example.oopproject1.R
 import com.example.oopproject1.data.Comment
-import com.example.oopproject1.data.ParliamentMember
 import kotlinx.android.synthetic.main.comment_row.view.*
-import kotlinx.android.synthetic.main.member_row.view.*
 
+/**
+ * @author Tiitus Telke
+ * @version 8.3.2021
+ * RecycleView adapter for showing comments.
+ */
 class CommentAdapter: RecyclerView.Adapter<CommentAdapter.CommentViewHolder>() {
     private var commentList = emptyList<Comment>()
 
@@ -26,6 +29,8 @@ class CommentAdapter: RecyclerView.Adapter<CommentAdapter.CommentViewHolder>() {
     override fun onBindViewHolder(holder: CommentViewHolder, position: Int) {
         val selectedItem = commentList[position]
         holder.itemView.commentText.text = selectedItem.comment
+        holder.itemView.nameView.text = selectedItem.userName
+        holder.itemView.timeView.text = selectedItem.time
     }
 
     fun setCommentData(comments: List<Comment>) {

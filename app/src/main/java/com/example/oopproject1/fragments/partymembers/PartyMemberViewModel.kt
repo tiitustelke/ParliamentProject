@@ -11,6 +11,11 @@ import com.example.oopproject1.image.ImageRepository
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.async
 
+/**
+ * @author Tiitus Telke
+ * @version 8.3.2021
+ * Viewmodel for PartyMemberList. Get Parliamentmembers by party and get photos of parliamentmembers.
+ */
 class PartyMemberViewModel(application: Application): AndroidViewModel(application) {
 
     private val memberRepo: MemberRepository

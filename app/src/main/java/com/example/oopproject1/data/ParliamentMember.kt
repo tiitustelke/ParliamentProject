@@ -4,12 +4,14 @@ import android.os.Parcelable
 import androidx.room.Entity
 import androidx.room.ForeignKey
 import androidx.room.PrimaryKey
-import androidx.room.TypeConverter
-import com.google.gson.Gson
-import com.google.gson.reflect.TypeToken
 import kotlinx.android.parcel.Parcelize
 
-//data class ParliamentMembers (val records:List<ParliamentMember>) {}
+/**
+ * @author Tiitus Telke
+ * @version 8.3.2021
+ * This file is for all entities required for storing data
+ */
+
 @Parcelize
 @Entity(tableName = "member_table")
 data class ParliamentMember(
@@ -48,5 +50,7 @@ data class Comment(
     @PrimaryKey(autoGenerate = true)
     val id: Int,
     val memberId: Int,
-    val comment: String
+    val userName: String,
+    val comment: String,
+    val time: String
 )

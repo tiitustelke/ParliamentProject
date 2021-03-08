@@ -4,9 +4,15 @@ import android.os.Parcelable
 import com.example.oopproject1.R
 import kotlinx.android.parcel.Parcelize
 
+/**
+ * @author Tiitus Telke
+ * @version 8.3.2021
+ * This class is for storing full names and logo ids of parties
+ */
+
 @Parcelize
 data class Party (
-        val abbr: String,
+        val abbr: String,                       //abbreviation
         val name: String,
         val logoID: Int
 ): Parcelable

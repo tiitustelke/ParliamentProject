@@ -18,6 +18,11 @@ import kotlinx.coroutines.launch
 import java.util.concurrent.TimeUnit
 import kotlin.coroutines.coroutineContext
 
+/**
+ * @author Tiitus Telke
+ * @version 8.3.2021
+ * Viewmodel that updates the parliament members
+ */
 class MemberViewModel(application: Application): AndroidViewModel(application) {
 
     private val repository: MemberRepository

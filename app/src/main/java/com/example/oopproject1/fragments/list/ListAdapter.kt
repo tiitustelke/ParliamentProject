@@ -8,7 +8,11 @@ import com.example.oopproject1.R
 import com.example.oopproject1.data.ParliamentMember
 import kotlinx.android.synthetic.main.member_row.view.*
 
-//https://www.youtube.com/watch?v=wKFJsrdiGS8
+/**
+ * @author Tiitus Telke
+ * @version 8.3.2021
+ * RecycleView adapter for showing all parliament members. I have used this tutorial: https://www.youtube.com/watch?v=wKFJsrdiGS8. Thank you Coding in FLow from Youtube.
+ */
 
 class ListAdapter(private val listener: OnItemClickListener): RecyclerView.Adapter<ListAdapter.MemberViewHolder>() {
 
@@ -20,6 +24,7 @@ class ListAdapter(private val listener: OnItemClickListener): RecyclerView.Adapt
             itemView.setOnClickListener(this)
         }
 
+        //get the position of the clicked item and notify the listener in ListFragment
         override fun onClick(v: View) {
             val position = adapterPosition
             if (position != RecyclerView.NO_POSITION) {

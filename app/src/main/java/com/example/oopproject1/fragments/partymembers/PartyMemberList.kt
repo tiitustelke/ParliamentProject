@@ -18,14 +18,12 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
 
-// TODO: Rename parameter arguments, choose names that match
-// the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-
 /**
- * A simple [Fragment] subclass.
- * Use the [ListFragment.newInstance] factory method to
- * create an instance of this fragment.
+ * @author Tiitus Telke
+ * @version 8.3.2021
+ * This class is for showing PartyMemberList fragment and handling its user actions. PartyMemberList fragment lists parties and allows the user to navigate to ParliamentMemberActivity fragment.
  */
+//implements adapters OnCLickListener interface, so recyclerview clicks call the overrided onItemClick() -method
 class PartyMemberList : Fragment(), PartyMemberAdapter.OnItemClickListener {
 
     private lateinit var partyMemberViewModel: PartyMemberViewModel
@@ -35,13 +33,13 @@ class PartyMemberList : Fragment(), PartyMemberAdapter.OnItemClickListener {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         partyMemberViewModel = ViewModelProvider(this).get(PartyMemberViewModel::class.java)
-
     }
-
+    //called when a recyclerview item is clicked
     override fun onItemClick(position: Int) {
+        //get the member that was clicked, send it as safearg to ParliamentMemberActivity
         val party = args.party
         GlobalScope.launch(Dispatchers.IO) {
-            val member = partyMemberViewModel.getMemberByParty(party.abbr,position).await()
+            val member = partyMemberViewModel.getMemberByParty(party.abbr,position).await()     //get the member that was clicked with the recyclerview item position and abbreviation of the party
 
             val action = PartyMemberListDirections.actionPartyMemberListToParliamentMemberActivity(member)
             findNavController().navigate(action)
@@ -57,6 +55,7 @@ class PartyMemberList : Fragment(), PartyMemberAdapter.OnItemClickListener {
                 R.layout.fragment_party_member_list,container,false
         )
 
+        //recyclerview adapter for listing members of a party
         val adapter = PartyMemberAdapter(this,partyMemberViewModel)
         val recyclerView = binding.partyMemberView
         recyclerView.adapter = adapter
@@ -64,6 +63,7 @@ class PartyMemberList : Fragment(), PartyMemberAdapter.OnItemClickListener {
 
         val party = args.party
 
+        //observer for parliament member of a party
         partyMemberViewModel.getMembersByParty(party.abbr).observe(viewLifecycleOwner, Observer { ParliamentMember ->
             adapter.setMemberData(ParliamentMember)
         })

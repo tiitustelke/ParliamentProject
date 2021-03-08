@@ -6,8 +6,12 @@ import androidx.room.Room
 import androidx.room.RoomDatabase
 import androidx.room.TypeConverters
 
-//https://www.youtube.com/watch?v=lwAvI3WDXBY
-@Database(entities = [ParliamentMember::class, Vote::class, Comment::class], version = 6, exportSchema = false)
+/**
+ * @author Tiitus Telke
+ * @version 8.3.2021
+ * Class for Room database. I have used this tutorial for some of the database stuff: https://www.youtube.com/watch?v=lwAvI3WDXBY, Thank you Stevdza-San from Youtube
+ */
+@Database(entities = [ParliamentMember::class, Vote::class, Comment::class], version = 2, exportSchema = false)
 abstract class MemberDataBase : RoomDatabase() {
 
     abstract fun memberDao(): MemberDao
@@ -30,8 +34,7 @@ abstract class MemberDataBase : RoomDatabase() {
                     context.applicationContext,
                     MemberDataBase::class.java,
                     "member_database"
-                ).fallbackToDestructiveMigration()
-                    .build()
+                ).build()
                 INSTANCE = instance
                 return instance
             }

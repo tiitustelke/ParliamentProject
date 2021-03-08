@@ -3,14 +3,16 @@ package com.example.oopproject1.data
 import androidx.lifecycle.LiveData
 import androidx.room.*
 
+/**
+ * @author Tiitus Telke
+ * @version 8.3.2021
+ * Dao for storing and fetching parliament members with Room
+ */
 @Dao
 interface MemberDao {
 
     @Insert(onConflict = OnConflictStrategy.IGNORE)
     fun addParliamentMember(member: ParliamentMember)
-
-    //@Insert(onConflict = OnConflictStrategy.IGNORE)
-    //fun addParliamentMembers(members: ParliamentMembers)
 
     @Query("SELECT * FROM member_table ORDER BY lastname ASC LIMIT 1 OFFSET :offset")
     fun getMember(offset: Int) : ParliamentMember

@@ -6,6 +6,11 @@ import androidx.room.Insert
 import androidx.room.OnConflictStrategy
 import androidx.room.Query
 
+/**
+ * @author Tiitus Telke
+ * @version 8.3.2021
+ * Dao for storing and fetching comments with Room
+ */
 @Dao
 interface CommentDao {
     @Insert(onConflict = OnConflictStrategy.IGNORE)

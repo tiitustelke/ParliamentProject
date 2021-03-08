@@ -15,12 +15,15 @@ import java.io.FileOutputStream
 import java.security.AccessController.getContext
 
 /**
- * https://stackoverflow.com/a/17674787
+ * @author Tiitus Telke
+ * @version 8.3.2021
+ * Class for saving images to device and loading them
+ * I used help from: https://stackoverflow.com/a/17674787 thanks Brijesh Thakur from stackoverflow
  */
 class ImageCache(appContext: Context) {
     private val context: Context = appContext
     val cw = ContextWrapper(context)
-    // path to /data/data/yourapp/app_data/imageDir
+    // path to /data/data/yourapp/app_data/imageCache
     val directory = cw.getDir("imageCache", Context.MODE_PRIVATE)
 
     fun cacheImage(name: String,bitmap: Bitmap): String {

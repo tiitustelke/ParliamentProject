@@ -9,8 +9,11 @@ import com.example.oopproject1.R
 import com.example.oopproject1.data.Party
 import kotlinx.android.synthetic.main.party_row.view.*
 
-//https://www.youtube.com/watch?v=wKFJsrdiGS8
-
+/**
+ * @author Tiitus Telke
+ * @version 8.3.2021
+ * RecycleView adapter for showing parties. I have used this tutorial: https://www.youtube.com/watch?v=wKFJsrdiGS8. Thank you Coding in FLow from Youtube.
+ */
 class PartyAdapter(private val listener: OnItemClickListener): RecyclerView.Adapter<PartyAdapter.PartyViewHolder>() {
 
     private var partyList = emptyList<Party>()
@@ -21,6 +24,7 @@ class PartyAdapter(private val listener: OnItemClickListener): RecyclerView.Adap
             itemView.setOnClickListener(this)
         }
 
+        //get the position of the clicked item and notify the listener in PartyFragment
         override fun onClick(v: View) {
             val position = adapterPosition
             if (position != RecyclerView.NO_POSITION) {

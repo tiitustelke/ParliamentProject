@@ -10,7 +10,12 @@ import com.example.oopproject1.data.MemberRepository
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.async
 
-
+/**
+ * @author Tiitus Telke
+ * @version 8.3.2021
+ * Viewmodel for listfragment. Gets members for the list from MemberRepository.
+ * @see MemberRepository
+ */
 class ListViewModel(application: Application): AndroidViewModel(application) {
 
     private val repository: MemberRepository
