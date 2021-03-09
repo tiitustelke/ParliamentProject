@@ -7,7 +7,7 @@ import kotlinx.android.parcel.Parcelize
 /**
  * @author Tiitus Telke
  * @version 8.3.2021
- * This class is for storing full names and logo ids of parties
+ * This file is for storing full names and logo ids of parties
  */
 
 @Parcelize

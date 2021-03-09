@@ -126,19 +126,19 @@ class ParliamentMemberActivity : Fragment() {
         val defaultValue = resources.getString(R.string.name_not_set)
         userName = sharedPref.getString(getString(R.string.user_pref), defaultValue) ?: defaultValue
     }
-
+    //add like for the member to the database
     private fun addLike() {
        viewModel.plusVote(member.hetekaId)
        likes++
        binding.likes = likes.toString()
    }
-
+    //remove a like for the member to the database
     private fun removeLike() {
         viewModel.minusVote(member.hetekaId)
         likes--
         binding.likes = likes.toString()
     }
-
+    //set data for the views excluding photo and likes
    private fun setMember() {
        val party = PartyData.parties.first { it.abbr == member.party }  //search the PartyData object for the logo and name of the member
 

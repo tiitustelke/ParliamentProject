@@ -34,9 +34,9 @@ class MemberUpdater(appContext: Context, workerParams: WorkerParameters):
                 ParliamentApi.retrofitService.getParliamentMembers()
             repository.clearMembers()       //delete old members
             members.forEach {
-                repository.addMember(it)
+                repository.addMember(it)                    //add members to member_table
                 val member = Vote(0,it.hetekaId)
-                voteRepository.addVotableMember(member)     //add members to vote table
+                voteRepository.addVotableMember(member)     //add members to vote_table
             }
 
         } catch (e: Exception) {
